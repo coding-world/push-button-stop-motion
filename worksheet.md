@@ -148,42 +148,41 @@ Super! Jetzt, da du erfolgreich ein paar einzelne Fotos mit der PiCamera gemacht
             break
     ```
 
-    *Da `while True` unendlich lange weiter laufen würde, musst du die Möglichkeit einbauen, das Programm manuell zu beenden. Indem du `try` und èxcept` nutzt, kann das Programm mit gesonderten Umständen umgehen - wenn du das Programm mit `Strg + C`zum Stoppen zwingst, wird die Kamera Vorschau geschlossen und die Schleife beendet.*
+    *Da `while True` unendlich lange weiter laufen würde, musst du die Möglichkeit einbauen, das Programm manuell zu beenden. Indem du `try` und `except` nutzt, kann das Programm mit gesonderten Umständen umgehen - wenn du das Programm mit `Strg + C`zum Stoppen zwingst, wird die Kamera Vorschau geschlossen und die Schleife beendet.*
 
-    *`frame%03d` means the file will be saved as the name "frame" followed by a 3-digit number with leading zeroes - 001, 002, 003, etc. This allows them to be easily sorted into the correct order for the video.*
+    *`frame%03d` heißt, dass die Datei mit dem Namen "frame" gefolgt von dreistelligen Zahl gespeichert wird. Es startet mit 001, 002, 003, usw. Diese Nummerierung ermöglicht eine übersichtliche Sortierung in der richtigen Reihenfolge für die Animation.*
 
-1. Now set up your animation subject (e.g. LEGO), ready to start the stop motion animation.
+3. Bevor wir mit der Kamera weiterarbeiten, musst du das Aufbauen, was animiert werden soll (zum Beipiel LEGO). Fertig? Gut, dann kann es losgehen.
 
-1. Press the button to capture the first frame, then rearrange the animation subject and press the button again to capture each subsequent frame.
+4. Drücke den Button, um das erste Foto aufzunehmen. Stelle die Elemente zur Animation um und drücke den Button erneut. Elemente umstellen, Button drücken. Elemen... ach, du weißt schon, was du zu tun hast.
 
-1. Once all the frames have been captured, press `Ctrl + C` to terminate the program.
+5. Sobald du alle Bilder aufgenommen hast, drückst du `Strg + C`, um das Programm zu beenden.
 
-1. Open the `animation` folder in the file manager to see your stills collection.
+6. Öffne den Ordner `animation` im Datei-Manager, um alle Standbilder zu sehen.
 
-## Generate the video
+## Die Animation erstellen
 
-1. To generate the video, begin by returning to the terminal window.
+1. Prima! Du hast alle Fotos aufgenommen, jetzt geht es darum, das bewegte Bild zu erstellen. Du beginnst damit, indem du das Terminalfenster öffnest.
 
-1. Run the video rendering command:
+2. Führe den Befehl aus, um das Video zu renden (engl. für erzeugen):
 
     ```bash
     avconv -r 10 -qscale 2 -i animation/frame%03d.jpg animation.mp4
     ```
 
-    *Note you're using `%03d` again - this is a common format which both Python and `avconv` understand, and means the photos will be passed in to the video in order.*
+    *Beachte, dass du wieder `%03d` nutzt - das ist ein übliches Format, das sowohl von Python, als auch von `avconv` verstanden wird. Es bedeutet einfach nur, dass die Fotos in der richtigen Reihenfolge ins Video eingebunden werden.*
 
-1. You can adjust the frame rate by editing the rendering command. Try changing `-r 10` (10 frames per second) to another number.
+3. Du hast die Möglichkeit, die Framerate (also die Geschwindigkeit, mit der ein neues Bild auf dem Bildschirm erscheint) zu ändern, indem du den Befehl zum Renden veränderst. Probiere doch mal, `-r 10` (10 Bilder pro Sekunde) in eine andere Zahl zu ändern.
 
     ```bash
     omxplayer animation.mp4
     ```
+4. Auch kannst du den Dateinamen des erzeugten Videos verändern, damit der vorherige Versuch nicht immer wieder überschrieben wird. Um das zu machen, musst du nur `animation.mp4` zu etwas anderem ändern.
 
-1. You can also change the filename of the rendered video to stop it from overwriting your first attempt. To do this, change `animation.mp4` to something else.
+## Was kommt als nächstes?
 
-## What next?
-
-- Why not share your video? Try uploading it to YouTube!
-- Now you know how to wire up a button to take a picture with the camera module, what else could you use this for?
-- Could you do something similar for a time-lapse video?
-- What could you use instead of a button? A motion sensor?
-- Instead of making a video, what else could you do with photos taken with the camera module? You could post them to Twitter, or another social media site.
+- Warum teilst du deine Animation nicht mit deinen Freunden? Lade es doch auf Youtube hoch!
+- Du weißt jetzt, wie du mit einem Button Fotos mit der PiCamera aufnehmen kannst, wofür kannst du dieses Wissen noch verwenden?
+- Kannst du etwas Ähnliches für ein Zeitraffer-Video machen?
+- Was könntest du anstatt eines Button verwenden? Einen Bewegungssensor?
+- Anstatt ein Video zu erstellen, was kannst du noch mit den aufgenommenen Fotos machen? Du könntest sie beispielsweise auf Twitter oder anderen Social-Media-Sites veröffentlichen!
