@@ -1,44 +1,42 @@
 # Push Button Stop Motion
 
-Make your own stop motion animation video with a push button controller, using Python and GPIO Zero.
+Elektronik und LEGO kombiniert? Einen Turmbau animieren? Mit Figuren eine Szene nachspielen? Oder sonst irgendetwas, das du vorstellen kannst? Wir zeigen dir, wie du mit Python und GPIO Zero deine eigene Stop-Motion-Animation mit einen Push Button Kontroller machen kannst. Also, lass deiner Fantasie freien Lauf! (Du musst natürlich nicht LEGO nehmen, sei einfach kreativ und lass dir was einfallen.)
 
-You can use LEGO to animate a tower being built, figures acting out a scene, or anything else you can think of!
+## Die Kamera verbinden
 
-## Connect the camera
+Bevor du deinen Pi startest, musst du zuerst einmal die Kamera anschließen.
 
-Before booting your Pi, you'll need to connect the camera.
+1. Suche auf dem Pi den Kamera Port. Er sollte sich neben dem Ethernet Port befinden. Dann musst du noch die Lasche an der Oberseite anheben.
 
-1. Locate the camera port next to the Ethernet port. Lift the tab on the top.
+2. Stecke das Kabel für die Kamera in den Port, dabei sollte die blaue Seite zum Ethernet Port zeigen. Während du das Kabel an seinem Platz hältst, musst die Lasche wieder runterdrücken.
 
-1. Place the strip in the connector, with the blue side facing the Ethernet port. While holding the strip in place, push down the tab.
+3. Jetzt kannst du deinen Pi starten.
 
-1. Turn the power on to boot the Pi.
+![Verbinde die Kamera](images/connect-camera.jpg)
 
-![Connect the camera](images/connect-camera.jpg)
+## Die Kamera testen
 
-## Test the camera
-
-1. Open a terminal window from the application menu. Enter the following command:
+1. Nachdem du die Kamera erfolgreich angeschlossen hast, kannst du sie nun testen. Dafür musst du zunächst das Terminalfenster öffnen und anschließend den folgenden Code eingeben:
 
     ```bash
     raspistill -k
     ```
 
-1. You should see a preview appear on the screen. It doesn't matter if the picture is upside-down; you can configure this later. Press `Ctrl + C` to exit the preview.
+2. Auf deinem Bildschirm sollte jetzt eine Vorschau erscheinen. Falls das Bild verkehrtherum ist, macht das erstmal nichts weiter. Du kannst das später ändern. Drücke `Strg + C`, um die Vorschau zu beenden.
 
-1. Run the command `ls` to see the files in your home directory; you should see `image1.jpg` listed.
+3. Mit dem Befehl `ls` kannst du alle Dateien in deinem Home-Verzeichnis sehen. Dort findest du die Datei `image1.jpg`.
 
-1. Click the file manager icon in the taskbar and you should see some folders and files. Double-click `image1.jpg` to preview it.
+4. Wenn du auf das Symbol für den Dateimanager in der Taskleiste klickst, siehst du einige Ordner und Dateien. Um dir `image1.jpg` anzusehen, musst du es mit einem Doppelklick öffnen.
 
-## Take a picture with Python
+## Ein Foto mit Python aufnehmen
 
-1. Open **Python 3 (IDLE)** from the main menu:
+1. Öffne **Python 3 (IDLE)** im Hauptmenü:
 
-    ![Open Python 3](images/python3-app-menu.png)
+    ![Öffne Python 3](images/python3-app-menu.png)
+    
+2. Wähle nun `File > New Window` im Menü aus, um einen Python Datei-Editor zu öffnen. 
 
-1. Select `File > New Window` from the menu to open a Python file editor.
-
-1. Carefully enter the following code into the new window (case is important!):
+3. Im nächsten Schritt gibst du folgenden Code in das Terminalfenster ein:
 
     ```python
     from picamera import PiCamera
@@ -52,19 +50,19 @@ Before booting your Pi, you'll need to connect the camera.
     camera.stop_preview()
     ```
 
-1. Select `File > Save` from the menu (or press `Ctrl + S`) and save as `animation.py`.
+4. Wähle im Menü `File > Save` aus (oder drücke `Strg + S`und speichere die Datei als `animation.py`.
 
-1. Press `F5` to run the script.
+5. Wenn du `F5` drückst, startest du das Programm
 
-1. You should see `image.jpg` saved on your Desktop. Double-click the icon to open the image.
+6. Auf deinem Destop solltest du jetzt die Datei `image.jpg` sehen. Öffne das Bild mit einem Doppelklick.
 
-1. If the picture is upside-down you can either reposition your camera using a mount, or leave it as it is and tell Python to flip the image. To do this, add the following lines:
+7. Falls das Bild auf dem Kopf steht, kannst du entweder die Kamera drehen, in dem du eine Halterung dafür verwendest. Oder du lässt es so wie es ist und sagst Python, es soll das Bild um 180 Grad drehen. Um das zu machen, gibst du diesen Code
 
     ```python
     camera.rotation = 180
     ```
 
-    after `camera = PiCamera()`, so it becomes:
+    hinter `camera = PiCamera()` ein, sodass daraus folgendes wird:
 
     ```python
     from picamera import PiCamera
@@ -79,15 +77,15 @@ Before booting your Pi, you'll need to connect the camera.
     camera.stop_preview()
     ```
 
-1. Run the file again and it will overwrite `image2.jpg` with a new image in the correct orientation. Remember to keep these lines in your code while you alter it in the next few steps.
+8. Starte das Programm erneut und die Datei wird mit einem neuen Bild in der richtigen Ausrichtung überschrieben. Denke daran, dass du die Zeilen auch im nachfolgenden Code beibehältst, wenn du diesen in den näächsten Schritten veränderst.
 
-## Connect a hardware button
+## Schließe den Push Button an
 
-1. Using your breadboard and jumper leads, connect the Pi to the button as shown in the diagram below:
+1. Die Kamera ist angeschlossen, nun geht es an den Push Button. Dazu brauchst du ein Breadboard und mehrer Jumper Kabel. Wie du den Button an deinen Pi anschließt, siehst du in der Darstellung:
 
     ![](images/picamera-gpio-setup.png)
-
-1. Import `Button` from the `gpiozero` module at the top of the code, create up a `Button` connected to pin 17, and change the `sleep` line to use `button.wait_for_press` like so:
+    
+2. Bevor du so richtig loslegen kannst, musst du noch `Button` aus dem  `gpiozero` Modul importieren. Das machst du gleich am Anfang deines Codes. Erstelle `Button` und gib an, dass dieser zu Pin 17 am Pi verbunden ist. Außerdem solltest du `sleep` mit `button.wait_for_press` ersetzen. Das sieht dann so aus:
 
     ```python
     from picamera import PiCamera
@@ -103,17 +101,17 @@ Before booting your Pi, you'll need to connect the camera.
     camera.stop_preview()
     ```
 
-1. Save and run your script.
+3. Speichere und starte dein Programm
 
-1. Once the preview has started, press the button connected to your Pi to capture an image.
+4. Sobald die Vorschau gestartet ist, drückst du den Button, den du an deinen Pi angeschlossen hast, um ein Foto aufzunehmen.
 
-1. Return to the file manager window and you should see your `image3.jpg`. Again, double-click to view.
+5. Gehe zurück zum Datei-Manager und du solltest eine Datei namens `image3.jpg` sehen. Und wieder, öffne das Foto mit einem Doppelklick, um es dir anzusehen.
 
-## Take a selfie
+## Ein Selfie machen
 
-If you want to take a photograph of yourself with the camera board, you are going to have to add in a delay to enable you to get into position. You can do this by modifying your program.
+Wenn du von dir selbst mit der PiCamera ein Foto machen willst, musst du eine Verzögerungszeit hinzufügen, damit du dich selbst in Position bringen kannst. Dafür reicht eine kleine Änderung in deinem Code.
 
-1. Add a line to your code to tell the program to sleep briefly before capturing an image, as below:
+1. Füge deinem Code eine Zeile hinzu, um dem Programm zu sagen, dass es warten soll, bis das Foto aufgenommen wird:
 
     ```python
     camera.start_preview()
@@ -123,19 +121,19 @@ If you want to take a photograph of yourself with the camera board, you are goin
     camera.stop_preview()
     ```
 
-1. Save and run your script.
+2. Programm speichern und starten.
 
-1. Press the button and try to take a selfie. Be sure to keep the camera still! Ideally, it should be mounted in position.
+3. Probiere einfach mal aus, ein Selfie zu machen, indem du Button drückst. Pass aber auf, dass due die Kamera nicht bewegst. Idealerweise hast du die Kamera fest in einer Position montiert.
 
-1. Again, feel free to check the image in the file manager. You can run the program again to take another selfie.
+4. Wie die Male zuvor auch, kannst du dir das Foto jetzt natürlich wieder im Datei-Manager ansehen. Starte das Programm anschließend neu, um ein neues Selfie aufzunehmen.
 
-## Stop motion animation
+## Stop-Motion-Animation
 
-Now that you have successfully taken individual photographs with your camera, it's time to try combining a series of still images to make a stop motion animation.
+Super! Jetzt, da du erfolgreich ein paar einzelne Fotos mit der PiCamera gemacht hast, ist es Zeit für den Versuch, mehrere Standbilder zu einer Stop-Motion-Animation zusammenzufügen.
 
-1. **IMPORTANT** You must create a new folder to store your stills. In the terminal window, enter `mkdir animation`.
+1. **WICHTIG** Du musst einen neuen Ordner erstellen, umd deine Standbilder zu speichern. Gebe im Terminalfenster `mkdir animation` ein.
 
-1. Modify your code to add a loop to keep taking pictures every time the button is pressed:
+2. Verändere deinen Code, um eine Schleife hinzuzufügen, damit jedes Mal, wenn du den Button drückst, ein Foto gemacht wird:
 
     ```python
     camera.start_preview()
@@ -150,7 +148,7 @@ Now that you have successfully taken individual photographs with your camera, it
             break
     ```
 
-    *Because `while True` goes on forever, you have to be able to make it exit gracefully. Using `try` and `except` means it can deal with an exceptional circumstance - if you force it to stop with `Ctrl + C` it will close the camera preview and exit the loop*
+    *Da `while True` unendlich lange weiter laufen würde, musst du die Möglichkeit einbauen, das Programm manuell zu beenden. Indem du `try` und èxcept` nutzt, kann das Programm mit gesonderten Umständen umgehen - wenn du das Programm mit `Strg + C`zum Stoppen zwingst, wird die Kamera Vorschau geschlossen und die Schleife beendet.*
 
     *`frame%03d` means the file will be saved as the name "frame" followed by a 3-digit number with leading zeroes - 001, 002, 003, etc. This allows them to be easily sorted into the correct order for the video.*
 
